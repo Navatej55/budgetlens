@@ -58,7 +58,6 @@ export default function InsightsPanel() {
       id="insights"
       className="rounded-2xl bg-[var(--card-bg)] border border-[var(--border-color)] py-5 px-6"
     >
-      {/* Header */}
       <div className="flex items-center gap-2.5 mb-5">
         <div className="w-7 h-7 rounded-lg bg-[#fbbf241f] border border-[#fbbf2440] flex items-center justify-center text-[#fbbf24] shrink-0">
           <Lightbulb size={14} />

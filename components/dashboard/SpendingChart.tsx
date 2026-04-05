@@ -20,7 +20,7 @@ const CustomTooltip = ({ active, payload }: {
       <div className="bg-[var(--card-bg)] border border-[var(--border-color)] rounded-xl py-2.5 px-3.5 shadow-[0_8px_24px_rgba(0,0,0,0.3)]">
         <p className="text-[13px] font-semibold text-[var(--text-primary)] mb-0.5">{name}</p>
         <p className="text-[12px] text-[var(--text-muted)]">
-          ${value.toLocaleString()} · {d.percentage.toFixed(1)}%
+          ${value.toLocaleString('en-US')} · {d.percentage.toFixed(1)}%
         </p>
       </div>
     );
@@ -78,9 +78,8 @@ export default function SpendingChart() {
         </div>
       ) : (
         <>
-          {/* Mobile chart */}
-          <div className="block sm:hidden">
-            <ResponsiveContainer width="100%" height={180}>
+          <div className="h-[180px] sm:h-[200px] w-full">
+            <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
                   data={top6}
@@ -88,32 +87,8 @@ export default function SpendingChart() {
                   nameKey="category"
                   cx="50%"
                   cy="50%"
-                  innerRadius={48}
-                  outerRadius={76}
-                  paddingAngle={3}
-                  labelLine={false}
-                  label={PieLabel}
-                >
-                  {top6.map((entry) => (
-                    <Cell key={entry.category} fill={entry.color} stroke="transparent" />
-                  ))}
-                </Pie>
-                <Tooltip content={<CustomTooltip />} />
-              </PieChart>
-            </ResponsiveContainer>
-          </div>
-          {/* Desktop chart */}
-          <div className="hidden sm:block">
-            <ResponsiveContainer width="100%" height={200}>
-              <PieChart>
-                <Pie
-                  data={top6}
-                  dataKey="amount"
-                  nameKey="category"
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={55}
-                  outerRadius={88}
+                  innerRadius="40%"
+                  outerRadius="65%"
                   paddingAngle={3}
                   labelLine={false}
                   label={PieLabel}
@@ -139,7 +114,7 @@ export default function SpendingChart() {
                   {item.category}
                 </span>
                 <span className="text-[12px] font-medium text-[var(--text-secondary)] shrink-0">
-                  ${item.amount.toLocaleString()}
+                  ${item.amount.toLocaleString('en-US')}
                 </span>
               </div>
             ))}

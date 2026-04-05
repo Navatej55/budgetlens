@@ -164,7 +164,7 @@ export const useFinanceStore = create<FinanceStore>()(
         transactions.forEach((t) => {
           const date = new Date(t.date);
           const key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
-          const label = date.toLocaleString('default', { month: 'short', year: '2-digit' });
+          const label = date.toLocaleString('en-US', { month: 'short', year: '2-digit' });
 
           if (!monthMap[key]) {
             monthMap[key] = { month: label, income: 0, expenses: 0, balance: 0 };
@@ -218,7 +218,7 @@ export const useFinanceStore = create<FinanceStore>()(
           insights.push({
             title: 'Top Spending Category',
             value: top.category,
-            description: `$${top.amount.toLocaleString()} spent (${top.percentage.toFixed(1)}% of total expenses)`,
+            description: `$${top.amount.toLocaleString('en-US')} spent (${top.percentage.toFixed(1)}% of total expenses)`,
             trend: 'negative',
           });
         }
@@ -232,7 +232,7 @@ export const useFinanceStore = create<FinanceStore>()(
           insights.push({
             title: 'Month-over-Month Spending',
             value: `${expenseDiff >= 0 ? '+' : ''}${pct}%`,
-            description: `Compared to ${previous.month}: $${Math.abs(expenseDiff).toLocaleString()} ${expenseDiff >= 0 ? 'more' : 'less'} in expenses`,
+            description: `Compared to ${previous.month}: $${Math.abs(expenseDiff).toLocaleString('en-US')} ${expenseDiff >= 0 ? 'more' : 'less'} in expenses`,
             trend: expenseDiff > 0 ? 'negative' : expenseDiff < 0 ? 'positive' : 'neutral',
           });
         }
@@ -259,7 +259,7 @@ export const useFinanceStore = create<FinanceStore>()(
         if (largestExpense) {
           insights.push({
             title: 'Largest Single Expense',
-            value: `$${largestExpense.amount.toLocaleString()}`,
+            value: `$${largestExpense.amount.toLocaleString('en-US')}`,
             description: `${largestExpense.description} on ${new Date(largestExpense.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`,
             trend: 'negative',
           });

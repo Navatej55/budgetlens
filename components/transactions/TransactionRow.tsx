@@ -82,7 +82,7 @@ export default function TransactionRow({ transaction, isAdmin, onEdit, onDelete 
         <span
           className={`text-[14px] font-bold ${isIncome ? 'text-[#10b981]' : 'text-[#f43f5e]'}`}
         >
-          {isIncome ? '+' : '-'}${amount.toLocaleString()}
+          {isIncome ? '+' : '-'}${amount.toLocaleString('en-US')}
         </span>
       </td>
 

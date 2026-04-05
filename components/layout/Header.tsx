@@ -15,7 +15,6 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-20 flex items-center justify-between py-4 px-8 bg-[var(--header-bg)] backdrop-blur-md border-b border-[var(--border-color)] flex-wrap gap-3">
-      {/* Left: greeting */}
       <div>
         <h1 className="text-[18px] font-semibold text-[var(--text-primary)] leading-[1.2] m-0">
           Financial Overview
@@ -25,9 +24,7 @@ export default function Header() {
         </p>
       </div>
 
-      {/* Right: controls */}
       <div className="flex items-center gap-3 flex-wrap">
-        {/* Notification bell */}
         <button
           id="notifications-btn"
           aria-label="Notifications"

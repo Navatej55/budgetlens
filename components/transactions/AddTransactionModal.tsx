@@ -90,15 +90,12 @@ export default function AddTransactionModal({ isOpen, onClose, editTarget }: Pro
       aria-label={editTarget ? 'Edit transaction' : 'Add transaction'}
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
     >
-      {/* Backdrop */}
       <div
         onClick={onClose}
         className="absolute inset-0 bg-black/65 backdrop-blur-[4px]"
       />
 
-      {/* Modal card */}
       <div className="animate-modal-in relative w-full max-w-[440px] bg-[var(--modal-bg)] border border-[var(--border-color)] rounded-[18px] shadow-[0_24px_64px_rgba(0,0,0,0.45)] overflow-hidden">
-        {/* ── Modal Header ── */}
         <div className="flex items-center justify-between py-[18px] px-5 border-b border-[var(--border-color)]">
           <div className="flex items-center gap-2.5">
             <div className="w-[30px] h-[30px] rounded-[9px] bg-[rgba(99,102,241,0.15)] border border-[rgba(99,102,241,0.3)] flex items-center justify-center text-[#818cf8] shrink-0">
@@ -118,10 +115,8 @@ export default function AddTransactionModal({ isOpen, onClose, editTarget }: Pro
           </button>
         </div>
 
-        {/* ── Form ── */}
         <form onSubmit={handleSubmit} className="p-5 flex flex-col gap-4">
 
-          {/* Type toggle */}
           <div>
             <span className={labelClass}>Type</span>
             <div className="flex gap-2">

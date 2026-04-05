@@ -43,7 +43,7 @@ export default function TransactionTable() {
       className="rounded-2xl bg-[var(--card-bg)] border border-[var(--border-color)] overflow-hidden"
     >
       {/* Section Header */}
-      <div className="flex items-center justify-between flex-wrap gap-3 py-5 px-6 border-b border-[var(--border-color)]">
+      <div className="flex items-center justify-between flex-wrap gap-3 py-4 px-4 sm:py-5 sm:px-6 border-b border-[var(--border-color)]">
         <div className="flex items-center gap-2.5">
           <div className="w-7 h-7 rounded-lg bg-[rgba(99,102,241,0.15)] border border-[rgba(99,102,241,0.3)] flex items-center justify-center text-[#818cf8] shrink-0">
             <ArrowLeftRight size={14} />
@@ -71,7 +71,7 @@ export default function TransactionTable() {
       </div>
 
       {/* Filters */}
-      <div className="py-4 px-6 border-b border-[var(--border-color)] bg-[var(--card-bg)]">
+      <div className="py-3 px-4 sm:py-4 sm:px-6 border-b border-[var(--border-color)] bg-[var(--card-bg)]">
         <TransactionFilters />
       </div>
 
