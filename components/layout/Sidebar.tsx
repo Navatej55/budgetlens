@@ -56,12 +56,6 @@ export default function Sidebar() {
           );
         })}
       </nav>
-
-      {/* Footer */}
-      <div className="p-3 rounded-xl bg-[var(--card-bg)] border border-[var(--border-color)]">
-        <p className="text-[10px] uppercase tracking-wider mb-1 text-[var(--text-muted)]">Version</p>
-        <p className="text-xs font-medium text-[var(--text-secondary)]">FinFlow v1.0.0</p>
-      </div>
     </aside>
   );
 }

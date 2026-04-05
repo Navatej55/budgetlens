@@ -41,10 +41,10 @@ export default function DashboardPage() {
         </main>
 
         {/* Footer */}
-        <footer className="py-4 px-8 border-t border-[var(--border-color)] flex items-center justify-between flex-wrap gap-2">
-          <p className="text-[12px] text-[var(--text-muted)]">
+        <footer className="py-4 px-8 border-t border-[var(--border-color)] flex items-center justify-end flex-wrap gap-2">
+          {/* <p className="text-[12px] text-[var(--text-muted)]">
             © {new Date().getFullYear()} FinFlow. All data is mock for demonstration purposes.
-          </p>
+          </p> */}
           <p className="text-[12px] text-[var(--text-muted)]">
             Built with Next.js 16 · Tailwind v4 · Zustand
           </p>
