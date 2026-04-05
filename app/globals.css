@@ -1,26 +1,171 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
+/* =====================
+   CSS Custom Properties
+   ===================== */
+
+:root[data-theme="dark"] {
+  --bg-primary: #0c0e16;
+  --bg-secondary: #0f1117;
+  --sidebar-bg: #0a0c13;
+  --header-bg: rgba(12, 14, 22, 0.85);
+  --card-bg: #13161f;
+  --card-hover: rgba(255, 255, 255, 0.04);
+  --modal-bg: #181b26;
+  --input-bg: #0f1117;
+  --border-color: rgba(255, 255, 255, 0.08);
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #4b5563;
+  --scrollbar-thumb: #1e2130;
+  --scrollbar-track: transparent;
+}
+
+:root[data-theme="light"] {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #f1f4f8;
+  --sidebar-bg: #ffffff;
+  --header-bg: rgba(248, 250, 252, 0.9);
+  --card-bg: #ffffff;
+  --card-hover: rgba(0, 0, 0, 0.03);
+  --modal-bg: #ffffff;
+  --input-bg: #f8fafc;
+  --border-color: rgba(0, 0, 0, 0.08);
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --scrollbar-thumb: #e2e8f0;
+  --scrollbar-track: transparent;
+}
+
+/* Default to dark */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg-primary: #0c0e16;
+  --bg-secondary: #0f1117;
+  --sidebar-bg: #0a0c13;
+  --header-bg: rgba(12, 14, 22, 0.85);
+  --card-bg: #13161f;
+  --card-hover: rgba(255, 255, 255, 0.04);
+  --modal-bg: #181b26;
+  --input-bg: #0f1117;
+  --border-color: rgba(255, 255, 255, 0.08);
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #4b5563;
+  --scrollbar-thumb: #1e2130;
+  --scrollbar-track: transparent;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* =====================
+   Base Styles
+   ===================== */
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* =====================
+   Scrollbars
+   ===================== */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #6366f130;
+}
+
+/* =====================
+   Select element dark mode fix
+   ===================== */
+
+select option {
+  background-color: var(--modal-bg);
+  color: var(--text-primary);
+}
+
+/* =====================
+   Input date picker icon tint
+   ===================== */
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1) opacity(0.4);
+  cursor: pointer;
+}
+
+/* =====================
+   Animations
+   ===================== */
+
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.animate-modal-in {
+  animation: modal-in 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* =====================
+   Recharts theme overrides
+   ===================== */
+
+.recharts-cartesian-grid-horizontal line,
+.recharts-cartesian-grid-vertical line {
+  stroke: var(--border-color) !important;
+}
+
+.recharts-tooltip-wrapper {
+  outline: none !important;
 }
