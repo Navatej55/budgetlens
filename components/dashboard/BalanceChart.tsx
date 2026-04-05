@@ -49,15 +49,15 @@ export default function BalanceChart() {
   return (
     <div
       id="balance-chart"
-      className="rounded-[16px] bg-[var(--card-bg)] border border-[var(--border-color)] py-5 px-6 min-w-0"
+      className="rounded-[16px] bg-[var(--card-bg)] border border-[var(--border-color)] py-5 px-4 sm:px-6 min-w-0"
     >
       {/* Header */}
-      <div className="flex items-center justify-between flex-wrap gap-2.5 mb-5">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-5">
         <div>
           <h2 className="text-[15px] font-semibold text-[var(--text-primary)] m-0">Balance Trend</h2>
           <p className="text-[12px] text-[var(--text-muted)] mt-[2px]">Monthly income vs expenses</p>
         </div>
-        <div className="flex items-center gap-4 flex-wrap">
+        <div className="flex items-center gap-3 flex-wrap">
           {[
             { label: 'Income', color: '#6366f1' },
             { label: 'Expenses', color: '#f43f5e' },
@@ -78,41 +78,62 @@ export default function BalanceChart() {
           <p className="text-[12px] opacity-70">Add income or expenses to see trends</p>
         </div>
       ) : (
-        <ResponsiveContainer width="100%" height={260}>
-          <AreaChart data={data} margin={{ top: 5, right: 5, left: -20, bottom: 0 }}>
-            <defs>
-              <linearGradient id="incomeGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#6366f1" stopOpacity={0.3} />
-                <stop offset="95%" stopColor="#6366f1" stopOpacity={0} />
-              </linearGradient>
-              <linearGradient id="expenseGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#f43f5e" stopOpacity={0.3} />
-                <stop offset="95%" stopColor="#f43f5e" stopOpacity={0} />
-              </linearGradient>
-              <linearGradient id="balanceGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#10b981" stopOpacity={0.3} />
-                <stop offset="95%" stopColor="#10b981" stopOpacity={0} />
-              </linearGradient>
-            </defs>
-            <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" vertical={false} />
-            <XAxis
-              dataKey="month"
-              tick={{ fill: 'var(--text-muted)', fontSize: 11 }}
-              axisLine={false}
-              tickLine={false}
-            />
-            <YAxis
-              tick={{ fill: 'var(--text-muted)', fontSize: 11 }}
-              axisLine={false}
-              tickLine={false}
-              tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`}
-            />
-            <Tooltip content={<CustomTooltip />} />
-            <Area type="monotone" dataKey="income" stroke="#6366f1" strokeWidth={2} fill="url(#incomeGrad)" activeDot={{ r: 4, fill: '#6366f1' }} />
-            <Area type="monotone" dataKey="expenses" stroke="#f43f5e" strokeWidth={2} fill="url(#expenseGrad)" activeDot={{ r: 4, fill: '#f43f5e' }} />
-            <Area type="monotone" dataKey="balance" stroke="#10b981" strokeWidth={2} fill="url(#balanceGrad)" activeDot={{ r: 4, fill: '#10b981' }} />
-          </AreaChart>
-        </ResponsiveContainer>
+        <>
+          <div className="block sm:hidden">
+            <ResponsiveContainer width="100%" height={200}>
+              <AreaChart data={data} margin={{ top: 5, right: 5, left: -25, bottom: 0 }}>
+                <defs>
+                  <linearGradient id="incomeGradM" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#6366f1" stopOpacity={0.3} />
+                    <stop offset="95%" stopColor="#6366f1" stopOpacity={0} />
+                  </linearGradient>
+                  <linearGradient id="expenseGradM" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#f43f5e" stopOpacity={0.3} />
+                    <stop offset="95%" stopColor="#f43f5e" stopOpacity={0} />
+                  </linearGradient>
+                  <linearGradient id="balanceGradM" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#10b981" stopOpacity={0.3} />
+                    <stop offset="95%" stopColor="#10b981" stopOpacity={0} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" vertical={false} />
+                <XAxis dataKey="month" tick={{ fill: 'var(--text-muted)', fontSize: 10 }} axisLine={false} tickLine={false} />
+                <YAxis tick={{ fill: 'var(--text-muted)', fontSize: 10 }} axisLine={false} tickLine={false} tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`} width={42} />
+                <Tooltip content={<CustomTooltip />} />
+                <Area type="monotone" dataKey="income" stroke="#6366f1" strokeWidth={2} fill="url(#incomeGradM)" activeDot={{ r: 4, fill: '#6366f1' }} />
+                <Area type="monotone" dataKey="expenses" stroke="#f43f5e" strokeWidth={2} fill="url(#expenseGradM)" activeDot={{ r: 4, fill: '#f43f5e' }} />
+                <Area type="monotone" dataKey="balance" stroke="#10b981" strokeWidth={2} fill="url(#balanceGradM)" activeDot={{ r: 4, fill: '#10b981' }} />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
+          <div className="hidden sm:block">
+            <ResponsiveContainer width="100%" height={260}>
+              <AreaChart data={data} margin={{ top: 5, right: 5, left: -20, bottom: 0 }}>
+                <defs>
+                  <linearGradient id="incomeGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#6366f1" stopOpacity={0.3} />
+                    <stop offset="95%" stopColor="#6366f1" stopOpacity={0} />
+                  </linearGradient>
+                  <linearGradient id="expenseGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#f43f5e" stopOpacity={0.3} />
+                    <stop offset="95%" stopColor="#f43f5e" stopOpacity={0} />
+                  </linearGradient>
+                  <linearGradient id="balanceGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#10b981" stopOpacity={0.3} />
+                    <stop offset="95%" stopColor="#10b981" stopOpacity={0} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" vertical={false} />
+                <XAxis dataKey="month" tick={{ fill: 'var(--text-muted)', fontSize: 11 }} axisLine={false} tickLine={false} />
+                <YAxis tick={{ fill: 'var(--text-muted)', fontSize: 11 }} axisLine={false} tickLine={false} tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`} />
+                <Tooltip content={<CustomTooltip />} />
+                <Area type="monotone" dataKey="income" stroke="#6366f1" strokeWidth={2} fill="url(#incomeGrad)" activeDot={{ r: 4, fill: '#6366f1' }} />
+                <Area type="monotone" dataKey="expenses" stroke="#f43f5e" strokeWidth={2} fill="url(#expenseGrad)" activeDot={{ r: 4, fill: '#f43f5e' }} />
+                <Area type="monotone" dataKey="balance" stroke="#10b981" strokeWidth={2} fill="url(#balanceGrad)" activeDot={{ r: 4, fill: '#10b981' }} />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
+        </>
       )}
     </div>
   );

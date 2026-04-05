@@ -58,7 +58,7 @@ export default function SpendingChart() {
   return (
     <div
       id="spending-chart"
-      className="rounded-2xl bg-[var(--card-bg)] border border-[var(--border-color)] py-5 px-6 flex flex-col min-w-0"
+      className="rounded-2xl bg-[var(--card-bg)] border border-[var(--border-color)] py-5 px-4 sm:px-6 flex flex-col min-w-0"
     >
       {/* Header */}
       <div className="mb-4">
@@ -78,27 +78,54 @@ export default function SpendingChart() {
         </div>
       ) : (
         <>
-          <ResponsiveContainer width="100%" height={200}>
-            <PieChart>
-              <Pie
-                data={top6}
-                dataKey="amount"
-                nameKey="category"
-                cx="50%"
-                cy="50%"
-                innerRadius={55}
-                outerRadius={88}
-                paddingAngle={3}
-                labelLine={false}
-                label={PieLabel}
-              >
-                {top6.map((entry) => (
-                  <Cell key={entry.category} fill={entry.color} stroke="transparent" />
-                ))}
-              </Pie>
-              <Tooltip content={<CustomTooltip />} />
-            </PieChart>
-          </ResponsiveContainer>
+          {/* Mobile chart */}
+          <div className="block sm:hidden">
+            <ResponsiveContainer width="100%" height={180}>
+              <PieChart>
+                <Pie
+                  data={top6}
+                  dataKey="amount"
+                  nameKey="category"
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={48}
+                  outerRadius={76}
+                  paddingAngle={3}
+                  labelLine={false}
+                  label={PieLabel}
+                >
+                  {top6.map((entry) => (
+                    <Cell key={entry.category} fill={entry.color} stroke="transparent" />
+                  ))}
+                </Pie>
+                <Tooltip content={<CustomTooltip />} />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+          {/* Desktop chart */}
+          <div className="hidden sm:block">
+            <ResponsiveContainer width="100%" height={200}>
+              <PieChart>
+                <Pie
+                  data={top6}
+                  dataKey="amount"
+                  nameKey="category"
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={55}
+                  outerRadius={88}
+                  paddingAngle={3}
+                  labelLine={false}
+                  label={PieLabel}
+                >
+                  {top6.map((entry) => (
+                    <Cell key={entry.category} fill={entry.color} stroke="transparent" />
+                  ))}
+                </Pie>
+                <Tooltip content={<CustomTooltip />} />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
 
           {/* Legend */}
           <div className="grid grid-cols-2 gap-2 mt-3">

@@ -14,7 +14,7 @@ export default function DashboardPage() {
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
         <Header />
 
-        <main className="flex-1 py-7 px-8 flex flex-col gap-6">
+        <main className="flex-1 py-4 px-4 sm:py-7 sm:px-8 flex flex-col gap-6">
           {/* Summary Cards */}
           <div className="animate-fade-up" style={{ animationDelay: '0ms' }}>
             <SummaryCards />
@@ -22,7 +22,7 @@ export default function DashboardPage() {
 
           {/* Charts row */}
           <div
-            className="animate-fade-up grid grid-cols-[1fr_340px] gap-5"
+            className="animate-fade-up grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-5"
             style={{ animationDelay: '60ms' }}
           >
             <BalanceChart />
