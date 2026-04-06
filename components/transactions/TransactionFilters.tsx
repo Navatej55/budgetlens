@@ -3,8 +3,108 @@
 import { useState } from 'react';
 import { useFinanceStore } from '@/store/useFinanceStore';
 import { EXPENSE_CATEGORIES, INCOME_CATEGORIES } from '@/data/transactions';
-import { Category, TransactionType, SortField } from '@/types';
+import { Category, SortField } from '@/types';
 import { Search, X, SlidersHorizontal, ArrowUpDown, Download, ChevronDown, ChevronUp } from 'lucide-react';
+
+const inputBaseClasses = "py-2 px-3 rounded-[10px] bg-[var(--input-bg)] border border-[var(--border-color)] text-[var(--text-primary)] text-[13px] outline-none transition-colors duration-200 cursor-pointer";
+
+/* ── Type pill buttons ─────────────────────────────────────── */
+interface TypeButtonsProps {
+  activeType: 'all' | 'income' | 'expense';
+  onSelect: (type: 'all' | 'income' | 'expense') => void;
+}
+
+function TypeButtons({ activeType, onSelect }: TypeButtonsProps) {
+  return (
+    <div className="flex items-center bg-[var(--input-bg)] border border-[var(--border-color)] rounded-[10px] p-1 gap-0.5">
+      {(['all', 'income', 'expense'] as const).map((type) => {
+        const isActive = activeType === type;
+        const activeColor = type === 'income' ? '#10b981' : type === 'expense' ? '#f43f5e' : '#6366f1';
+        return (
+          <button
+            key={type}
+            id={`filter-type-${type}`}
+            onClick={() => onSelect(type)}
+            className={`py-1.5 px-3 rounded-[7px] text-[12px] font-medium cursor-pointer border-none transition-all duration-200 ${
+              isActive
+                ? 'text-white'
+                : 'bg-transparent text-[var(--text-muted)] hover:bg-[var(--card-hover)]'
+            }`}
+            style={isActive ? { backgroundColor: activeColor } : {}}
+          >
+            {type === 'all' ? 'All' : type.charAt(0).toUpperCase() + type.slice(1)}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+/* ── Category select ──────────────────────────────────────── */
+interface CategorySelectProps {
+  value: Category | 'all';
+  onChange: (value: Category | 'all') => void;
+}
+
+function CategorySelect({ value, onChange }: CategorySelectProps) {
+  return (
+    <select
+      id="filter-category"
+      value={value}
+      onChange={(e) => onChange(e.target.value as Category | 'all')}
+      className={`${inputBaseClasses} w-full`}
+    >
+      <option value="all">All Categories</option>
+      <optgroup label="Income">
+        {INCOME_CATEGORIES.map((c) => (
+          <option key={c} value={c}>{c}</option>
+        ))}
+      </optgroup>
+      <optgroup label="Expenses">
+        {EXPENSE_CATEGORIES.map((c) => (
+          <option key={c} value={c}>{c}</option>
+        ))}
+      </optgroup>
+    </select>
+  );
+}
+
+/* ── Sort buttons ─────────────────────────────────────────── */
+interface SortButtonsProps {
+  sortField: SortField;
+  sortDirection: 'asc' | 'desc';
+  onToggle: (field: SortField) => void;
+}
+
+function SortButtons({ sortField, sortDirection, onToggle }: SortButtonsProps) {
+  return (
+    <div className="flex items-center gap-1.5">
+      <SlidersHorizontal size={14} className="text-[var(--text-muted)]" />
+      <span className="text-[12px] text-[var(--text-muted)]">Sort:</span>
+      {(['date', 'amount'] as SortField[]).map((field) => {
+        const isActive = sortField === field;
+        return (
+          <button
+            key={field}
+            id={`sort-${field}`}
+            onClick={() => onToggle(field)}
+            className={`flex items-center gap-1 py-1 px-2.5 rounded-lg text-[12px] font-medium cursor-pointer transition-all duration-200 border ${
+              isActive
+                ? 'bg-[rgba(99,102,241,0.15)] text-[#818cf8] border-[rgba(99,102,241,0.3)]'
+                : 'bg-[var(--input-bg)] text-[var(--text-muted)] border-[var(--border-color)] hover:bg-[var(--card-hover)]'
+            }`}
+          >
+            <ArrowUpDown size={11} />
+            {field.charAt(0).toUpperCase() + field.slice(1)}
+            {isActive && (
+              <span>{sortDirection === 'asc' ? '↑' : '↓'}</span>
+            )}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
 
 export default function TransactionFilters() {
   const {
@@ -74,84 +174,6 @@ export default function TransactionFilters() {
     URL.revokeObjectURL(url);
   };
 
-  const inputBaseClasses = "py-2 px-3 rounded-[10px] bg-[var(--input-bg)] border border-[var(--border-color)] text-[var(--text-primary)] text-[13px] outline-none transition-colors duration-200 cursor-pointer";
-
-  /* ── Type pill buttons ─────────────────────────────────────── */
-  const TypeButtons = () => (
-    <div className="flex items-center bg-[var(--input-bg)] border border-[var(--border-color)] rounded-[10px] p-1 gap-0.5">
-      {(['all', 'income', 'expense'] as const).map((type) => {
-        const isActive = filters.type === type;
-        const activeColor = type === 'income' ? '#10b981' : type === 'expense' ? '#f43f5e' : '#6366f1';
-        return (
-          <button
-            key={type}
-            id={`filter-type-${type}`}
-            onClick={() => setTypeFilter(type)}
-            className={`py-1.5 px-3 rounded-[7px] text-[12px] font-medium cursor-pointer border-none transition-all duration-200 ${
-              isActive
-                ? 'text-white'
-                : 'bg-transparent text-[var(--text-muted)] hover:bg-[var(--card-hover)]'
-            }`}
-            style={isActive ? { backgroundColor: activeColor } : {}}
-          >
-            {type === 'all' ? 'All' : type.charAt(0).toUpperCase() + type.slice(1)}
-          </button>
-        );
-      })}
-    </div>
-  );
-
-  /* ── Category select ──────────────────────────────────────── */
-  const CategorySelect = () => (
-    <select
-      id="filter-category"
-      value={filters.category}
-      onChange={(e) => setCategoryFilter(e.target.value as Category | 'all')}
-      className={`${inputBaseClasses} w-full`}
-    >
-      <option value="all">All Categories</option>
-      <optgroup label="Income">
-        {INCOME_CATEGORIES.map((c) => (
-          <option key={c} value={c}>{c}</option>
-        ))}
-      </optgroup>
-      <optgroup label="Expenses">
-        {EXPENSE_CATEGORIES.map((c) => (
-          <option key={c} value={c}>{c}</option>
-        ))}
-      </optgroup>
-    </select>
-  );
-
-  /* ── Sort buttons ─────────────────────────────────────────── */
-  const SortButtons = () => (
-    <div className="flex items-center gap-1.5">
-      <SlidersHorizontal size={14} className="text-[var(--text-muted)]" />
-      <span className="text-[12px] text-[var(--text-muted)]">Sort:</span>
-      {(['date', 'amount'] as SortField[]).map((field) => {
-        const isActive = filters.sortField === field;
-        return (
-          <button
-            key={field}
-            id={`sort-${field}`}
-            onClick={() => handleSortToggle(field)}
-            className={`flex items-center gap-1 py-1 px-2.5 rounded-lg text-[12px] font-medium cursor-pointer transition-all duration-200 border ${
-              isActive
-                ? 'bg-[rgba(99,102,241,0.15)] text-[#818cf8] border-[rgba(99,102,241,0.3)]'
-                : 'bg-[var(--input-bg)] text-[var(--text-muted)] border-[var(--border-color)] hover:bg-[var(--card-hover)]'
-            }`}
-          >
-            <ArrowUpDown size={11} />
-            {field.charAt(0).toUpperCase() + field.slice(1)}
-            {isActive && (
-              <span>{filters.sortDirection === 'asc' ? '↑' : '↓'}</span>
-            )}
-          </button>
-        );
-      })}
-    </div>
-  );
-
   return (
     <div className="flex flex-col gap-2">
       <div className="flex items-center gap-2">
@@ -218,15 +240,19 @@ export default function TransactionFilters() {
 
       <div className={`flex-col gap-2 ${filtersOpen ? 'flex' : 'hidden'} sm:flex sm:flex-row sm:flex-wrap sm:items-center sm:gap-2.5`}>
         {/* Type */}
-        <TypeButtons />
+        <TypeButtons activeType={filters.type} onSelect={setTypeFilter} />
 
         {/* Category */}
         <div className="sm:w-auto w-full">
-          <CategorySelect />
+          <CategorySelect value={filters.category} onChange={setCategoryFilter} />
         </div>
 
         {/* Sort */}
-        <SortButtons />
+        <SortButtons
+          sortField={filters.sortField}
+          sortDirection={filters.sortDirection}
+          onToggle={handleSortToggle}
+        />
 
         {hasActiveFilters && (
           <button

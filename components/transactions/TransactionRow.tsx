@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import { Transaction } from '@/types';
 import { CATEGORY_COLORS } from '@/data/transactions';
 import { ArrowUpRight, ArrowDownRight, Pencil, Trash2 } from 'lucide-react';

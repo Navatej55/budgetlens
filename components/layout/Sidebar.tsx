@@ -12,9 +12,9 @@ import {
 
 const navItems = [
   { label: 'Dashboard', href: '/', icon: LayoutDashboard },
-  { label: 'Transactions', href: '#transactions', icon: ArrowLeftRight },
   { label: 'Analytics', href: '#analytics', icon: TrendingUp },
   { label: 'Insights', href: '#insights', icon: Lightbulb },
+  { label: 'Transactions', href: '#transactions', icon: ArrowLeftRight },
 ];
 
 export default function Sidebar() {

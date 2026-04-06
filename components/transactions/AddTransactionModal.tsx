@@ -33,6 +33,7 @@ export default function AddTransactionModal({ isOpen, onClose, editTarget }: Pro
   const [form, setForm] = useState(defaultForm);
   const [errors, setErrors] = useState<Partial<typeof defaultForm>>({});
 
+  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     if (editTarget) {
       setForm({
@@ -47,6 +48,7 @@ export default function AddTransactionModal({ isOpen, onClose, editTarget }: Pro
     }
     setErrors({});
   }, [editTarget, isOpen]);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   const validate = () => {
     const newErrors: Partial<typeof defaultForm> = {};

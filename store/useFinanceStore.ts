@@ -15,7 +15,7 @@ import {
   CategoryData,
   Insight,
 } from '@/types';
-import { mockTransactions, CATEGORY_COLORS, EXPENSE_CATEGORIES } from '@/data/transactions';
+import { mockTransactions, CATEGORY_COLORS } from '@/data/transactions';
 
 interface FinanceStore {
   // Data

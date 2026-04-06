@@ -81,6 +81,7 @@ function StatCard({ id, label, value, subtext, trend, icon, accent, gradientFrom
 
 export default function SummaryCards() {
   const [mounted, setMounted] = useState(false);
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => { setMounted(true); }, []);
 
   const { getSummaryStats } = useFinanceStore();

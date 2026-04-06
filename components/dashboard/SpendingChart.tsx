@@ -30,9 +30,19 @@ const CustomTooltip = ({ active, payload }: {
 
 const RADIAN = Math.PI / 180;
 
-const PieLabel = (props: any) => {
+interface PieLabelProps {
+  cx?: number;
+  cy?: number;
+  midAngle?: number;
+  innerRadius?: number;
+  outerRadius?: number;
+  percent?: number;
+}
+
+const PieLabel = (props: PieLabelProps) => {
   const { cx, cy, midAngle, innerRadius, outerRadius, percent } = props;
-  if (percent < 0.06) return null;
+  if (percent == null || percent < 0.06) return null;
+  if (cx == null || cy == null || midAngle == null || innerRadius == null || outerRadius == null) return null;
   const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
   const x = cx + radius * Math.cos(-midAngle * RADIAN);
   const y = cy + radius * Math.sin(-midAngle * RADIAN);
